@@ -202,6 +202,10 @@ void loop() {
 
 ## Test Serial dengan button 0
 
+Buat file baru atau buka contoh program di **File -> Examples -> Basics -> BareMinimum**, kemudian yang harus anda lakukan adalah:
+
+1. Gantikan kode yang ada dengan kode berikut:
+
 ```c++
 const int BUTTON_PIN = 0;   // GPIO0 (Tombol BOOT)
 
@@ -210,9 +214,7 @@ const int pressDelay = 300;  // Minimal jeda antar input
 
 void setup() {
   Serial.begin(115200);
-  pinMode(LED_PIN, OUTPUT);
   pinMode(BUTTON_PIN, INPUT_PULLUP);  // Aktifkan pull-up internal
-  digitalWrite(LED_PIN, HIGH);        // Matikan LED awal
   Serial.println("System Ready!");
 }
 
@@ -227,6 +229,56 @@ void loop() {
   } else {
   }
 }
+```
+
+## Upload program
+
+Bila tampilan seperti ini maka anda harus mengkonfigurasi ESP32 anda agar bisa melakukan download
+
+```
+- ---esptool.py v3.0-dev
+- ---Serial port COM…
+- ---Connecting........_____....._____.....__
+```
+
+Langkah yang harus dilakukan
+
+- Pastikan ESP32 DevKitC-V4 terhubung ke komputer via USB
+- Tekan dan tahan tombol Boot/0  
+- Klik(tekan dan lepas) tombol reset/EN sambil tetap tekan tombol Boot .
+- Lepas tombol boot
+- Klik tombol upload pada Arduino IDE, bila sukses akan menampilkan info
+
+```cpp
+- ---Compressed 261792 bytes to 122378...
+- ---Writing at 0x00010000... (12 %)
+- ---Writing at 0x00014000... (25 %)
+- ---Writing at 0x00018000... (37 %)
+```
+
+- Setelah selesai Wajib klik tombol **reset** sekali lagi untuk berpindah dari mode download menjadi mode run
+
+> [!NOTE]  
+> INGAT YA WAJIB Di Klik Tombol RESET setelah proses upload selesai, tanpa itu program yang baru diupload tidak akan dijalankan
+
+## Uji Program Dengan serial monitor
+
+- Buka Serial Monitor di Arduino IDE (Ctrl+Shift+M)
+
+- Set baud rate ke **115200** (sesuai kode)
+
+- Pastikan line ending diatur ke **Newline**
+
+- Tekan **Tombol BOOT** (tombol sebelah USB port)
+
+- Amati output di Serial Monitor:
+
+- harusnya menampilkan data berikut setiap kali tombol boot ditekan
+
+```
+System Ready!
+Tombol BOOT ditekan!
+Tombol BOOT ditekan!  
 ```
 
 ## Pemecahan Masalah
